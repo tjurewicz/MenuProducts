@@ -1,6 +1,6 @@
 package com.example.goustoproducts.api
 
-public class NetworkingConstants {
+class NetworkingConstants {
 
     val API_PRODUCTS_ENDPOINT = "/products"
 }

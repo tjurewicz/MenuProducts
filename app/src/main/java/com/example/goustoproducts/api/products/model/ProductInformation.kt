@@ -1,4 +1,4 @@
-package com.example.goustoproducts.api.products
+package com.example.goustoproducts.api.products.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -16,6 +16,7 @@ data class ProductInformation(
     @SerializedName("volume") val volume: Int,
     @SerializedName("zone") val zone: String,
     @SerializedName("created_at") val createdAt: String,
+    //attributes
     @SerializedName("tags") val tags: List<String>,
     @SerializedName("images") val images: List<String>
 )
