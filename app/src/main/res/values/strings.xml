@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GoustoProducts</string>
+    <string name="product_fragment">ProductFragment</string>
+</resources>
