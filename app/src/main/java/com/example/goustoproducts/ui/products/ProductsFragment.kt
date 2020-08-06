@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.ProductInformation
-import kotlinx.android.synthetic.main.product_fragment.*
 import kotlinx.android.synthetic.main.product_list_item.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,7 +38,7 @@ class ProductsFragment : Fragment() {
     }
 
     private fun setupRecyclerView(data: List<ProductInformation>) {
-
+        println(data.size)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.product_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(this.context)
         listAdapter = ProductListAdapter(data)

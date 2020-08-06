@@ -1,5 +1,6 @@
 package com.example.goustoproducts.ui.products
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,28 @@ class ProductListAdapter(
         holder.itemView.setOnClickListener { holder.openProductPage(model) }
     }
 
+    init {
+        onClickListener = View.OnClickListener { v ->
+            val item = v.tag as DummyContent.DummyItem
+            if (twoPane) {
+                val fragment = ItemDetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                    }
+                }
+                parentActivity.supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit()
+            } else {
+                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
+                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                }
+                v.context.startActivity(intent)
+            }
+        }
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         internal fun updateImage(image: List<Image>) {
@@ -60,6 +83,11 @@ class ProductListAdapter(
         }
 
         internal fun openProductPage(model: ProductInformation) {
+
+            val intent = Intent(itemView.context, ItemDetailActivity::class.java).apply {
+                putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+            }
+            itemView.context.startActivity(intent)
             val bundle = Bundle()
             bundle.putSerializable("ProductInformation", model)
             bundle.putString("title", model.title)
