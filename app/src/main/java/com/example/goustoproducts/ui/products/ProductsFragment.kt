@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.goustoproducts.R
-import kotlinx.android.synthetic.main.product_fragment.*
+import com.example.goustoproducts.ui.products.ProductsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
-
 
 class ProductsFragment : Fragment() {
 
@@ -30,12 +29,9 @@ class ProductsFragment : Fragment() {
         } catch (e: Exception) {
             Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
         }
-
     }
-
 
     companion object {
         fun newInstance() = ProductsFragment()
     }
-
 }

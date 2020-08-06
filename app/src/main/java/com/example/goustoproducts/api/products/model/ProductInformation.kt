@@ -11,12 +11,12 @@ data class ProductInformation(
     @SerializedName("is_vatable") val isVatable: Boolean,
     @SerializedName("is_for_sale") val isForSale: Boolean,
     @SerializedName("age_restricted") val ageRestricted: String,
-    @SerializedName("box_limit") val boxLimit: Int,
+    @SerializedName("box_limit") val boxLimit: Int?,
     @SerializedName("always_on_menu") val alwaysOnMenu: Boolean,
-    @SerializedName("volume") val volume: Int,
-    @SerializedName("zone") val zone: String,
+    @SerializedName("volume") val volume: Int?,
+    @SerializedName("zone") val zone: String?,
     @SerializedName("created_at") val createdAt: String,
-    //attributes
+    @SerializedName("attributes") val attributes: Attributes?,
     @SerializedName("tags") val tags: List<String>,
-    @SerializedName("images") val images: List<String>
+    @SerializedName("images") val images: List<Image>
 )
