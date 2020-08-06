@@ -3,7 +3,11 @@ package com.example.goustoproducts.api.products.model
 import com.google.gson.annotations.SerializedName
 
 data class Image(
-    @SerializedName("src") val offset: String,
-    @SerializedName("url") val limit: String,
-    @SerializedName("width") val count: Int
+    @SerializedName("750") val imageDetails: ImageDetails
+)
+
+data class ImageDetails(
+    @SerializedName("src") val src: String,
+    @SerializedName("url") val url: String,
+    @SerializedName("width") val width: Int
 )

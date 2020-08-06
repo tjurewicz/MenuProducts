@@ -1,19 +1,16 @@
 package com.example.goustoproducts.ui.products
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.goustoproducts.api.products.IProductsAPI
 import com.example.goustoproducts.api.products.model.ProductsResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ProductsViewModel(val api: IProductsAPI) : ViewModel() {
+class ProductsViewModel(private val api: IProductsAPI) : ViewModel() {
 
-    fun requestProducts() {
-        var model: ProductsResponse? = null
-        viewModelScope.launch(Dispatchers.IO) {
-            model = api.fetchProductList()
-            println("vm $model")
-        }
-    }
+    fun getProducts(): Single<ProductsResponse> =
+        api.fetchProductList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }

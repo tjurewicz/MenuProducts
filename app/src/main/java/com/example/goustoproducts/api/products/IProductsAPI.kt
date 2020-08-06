@@ -1,6 +1,8 @@
 package com.example.goustoproducts.api.products
 
 import com.example.goustoproducts.api.products.model.ProductsResponse
+import io.reactivex.rxjava3.core.Single
+import retrofit2.Call
 import retrofit2.http.GET
 
 interface IProductsAPI {
@@ -10,6 +12,6 @@ interface IProductsAPI {
     }
 
     @GET(API_PRODUCTS_ENDPOINT)
-    suspend fun fetchProductList(): ProductsResponse
+    fun fetchProductList(): Single<ProductsResponse>
 
 }
