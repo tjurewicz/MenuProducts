@@ -16,6 +16,7 @@ data class ProductInformation(
     @SerializedName("volume") val volume: Int?,
     @SerializedName("zone") val zone: String?,
     @SerializedName("created_at") val createdAt: String,
+    @SerializedName("categories") val categories: List<Category>,
     @SerializedName("attributes") val attributes: Attributes?,
     @SerializedName("tags") val tags: List<String>,
     @SerializedName("images") val images: List<Image>
