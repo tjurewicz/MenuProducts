@@ -37,6 +37,8 @@ class ProductListAdapter(
         holder.updateProductPrice(this.listPrice)
         if (this.images.imageDetails != null && this.images.imageDetails.src.isNotEmpty()) {
             holder.updateImage(this.images.imageDetails.src)
+        } else {
+            holder.updateImage("")
         }
     }
 

@@ -28,25 +28,24 @@ class ProductsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProducts()
-            .subscribe({
-                setupRecyclerView(it.data)
-                showProducts(it.data)
-            },
-                {
-                    Toast.makeText(context, "Could not retrieve data", Toast.LENGTH_LONG).show()
-                })
+        if (viewModel.products == null)
+            viewModel.getProducts()
+                .subscribe({
+                    setupRecyclerView(it.data)
+                },
+                    {
+                        Toast.makeText(context, "Could not retrieve data", Toast.LENGTH_LONG).show()
+                    })
+        else {
+            setupRecyclerView(viewModel.products!!.data)
+        }
     }
 
     private fun setupRecyclerView(data: List<ProductData>) {
-        println(data.size)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.product_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(this.context)
         listAdapter = ProductListAdapter(data, this.activity as MainActivity)
         recyclerView?.adapter = listAdapter
     }
 
-    private fun showProducts(products: List<ProductData>) = product_title.run {
-        listAdapter = ProductListAdapter(products, this@ProductsFragment.activity as MainActivity)
-    }
 }
