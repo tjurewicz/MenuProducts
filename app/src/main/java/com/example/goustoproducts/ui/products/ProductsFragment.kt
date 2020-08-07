@@ -41,12 +41,12 @@ class ProductsFragment : Fragment() {
         println(data.size)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.product_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(this.context)
-        listAdapter = ProductListAdapter(data)
+        listAdapter = ProductListAdapter(data, this)
         recyclerView?.adapter = listAdapter
     }
 
     private fun showProducts(products: List<ProductInformation>) = product_title.run {
-        listAdapter = ProductListAdapter(products)
+        listAdapter = ProductListAdapter(products, this@ProductsFragment)
     }
 
     companion object {

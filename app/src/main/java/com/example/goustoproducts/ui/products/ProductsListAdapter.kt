@@ -1,11 +1,11 @@
 package com.example.goustoproducts.ui.products
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.Image
@@ -13,9 +13,7 @@ import com.example.goustoproducts.api.products.model.ProductInformation
 import kotlinx.android.synthetic.main.product_list_item.view.*
 
 
-class ProductListAdapter(
-    private val productList: List<ProductInformation>
-) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+class ProductListAdapter(private val productList: List<ProductInformation>, private val fragment: Fragment) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return LayoutInflater.from(parent.context)
@@ -36,29 +34,7 @@ class ProductListAdapter(
     }
 
     private fun setClickListeners(holder: ViewHolder, model: ProductInformation) {
-        holder.itemView.setOnClickListener { holder.openProductPage(model) }
-    }
-
-    init {
-        onClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyContent.DummyItem
-            if (twoPane) {
-                val fragment = ItemDetailFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                    }
-                }
-                parentActivity.supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commit()
-            } else {
-                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                }
-                v.context.startActivity(intent)
-            }
-        }
+        holder.itemView.setOnClickListener { holder.openProductPage(model, fragment) }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -82,15 +58,16 @@ class ProductListAdapter(
             itemView.product_price.text = priceWithPound
         }
 
-        internal fun openProductPage(model: ProductInformation) {
-
-            val intent = Intent(itemView.context, ItemDetailActivity::class.java).apply {
-                putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+        internal fun openProductPage(product: ProductInformation, fragment: Fragment) {
+            val detailFragment = ProductDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ProductDetailFragment.ARG_ITEM_ID, product.id)
+                }
             }
-            itemView.context.startActivity(intent)
-            val bundle = Bundle()
-            bundle.putSerializable("ProductInformation", model)
-            bundle.putString("title", model.title)
+            fragment.childFragmentManager
+                .beginTransaction()
+                .replace(R.id.product_recycler_view, detailFragment)
+                .commit()
         }
     }
 }
