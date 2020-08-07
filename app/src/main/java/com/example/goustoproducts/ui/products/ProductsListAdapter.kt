@@ -1,5 +1,6 @@
 package com.example.goustoproducts.ui.products
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goustoproducts.MainActivity
 import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.Image
 import com.example.goustoproducts.api.products.model.ProductInformation
 import kotlinx.android.synthetic.main.product_list_item.view.*
 
 
-class ProductListAdapter(private val productList: List<ProductInformation>, private val fragment: Fragment) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+class ProductListAdapter(private val productList: List<ProductInformation>, private val activity: MainActivity) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return LayoutInflater.from(parent.context)
@@ -34,7 +36,7 @@ class ProductListAdapter(private val productList: List<ProductInformation>, priv
     }
 
     private fun setClickListeners(holder: ViewHolder, model: ProductInformation) {
-        holder.itemView.setOnClickListener { holder.openProductPage(model, fragment) }
+        holder.itemView.setOnClickListener { holder.openProductPage(model, activity) }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -58,15 +60,16 @@ class ProductListAdapter(private val productList: List<ProductInformation>, priv
             itemView.product_price.text = priceWithPound
         }
 
-        internal fun openProductPage(product: ProductInformation, fragment: Fragment) {
+        internal fun openProductPage(product: ProductInformation, activity: MainActivity) {
             val detailFragment = ProductDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ProductDetailFragment.ARG_ITEM_ID, product.id)
+                    putString(ProductDetailFragment.ARG_PRODUCT_ID, product.id)
                 }
             }
-            fragment.childFragmentManager
+            activity.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.product_recycler_view, detailFragment)
+                .replace(R.id.container, detailFragment)
+                .addToBackStack(null)
                 .commit()
         }
     }

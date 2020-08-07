@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goustoproducts.MainActivity
 import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.ProductInformation
 import kotlinx.android.synthetic.main.product_list_item.*
@@ -41,15 +42,11 @@ class ProductsFragment : Fragment() {
         println(data.size)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.product_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(this.context)
-        listAdapter = ProductListAdapter(data, this)
+        listAdapter = ProductListAdapter(data, this.activity as MainActivity)
         recyclerView?.adapter = listAdapter
     }
 
     private fun showProducts(products: List<ProductInformation>) = product_title.run {
-        listAdapter = ProductListAdapter(products, this@ProductsFragment)
-    }
-
-    companion object {
-        fun newInstance() = com.example.goustoproducts.ui.products.ProductsFragment()
+        listAdapter = ProductListAdapter(products, this@ProductsFragment.activity as MainActivity)
     }
 }
