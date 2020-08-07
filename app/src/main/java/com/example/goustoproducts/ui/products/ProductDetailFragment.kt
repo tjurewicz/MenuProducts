@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.goustoproducts.R
-import kotlinx.android.synthetic.main.product_detail_fragment.*
+import com.example.goustoproducts.api.products.model.ProductData
+import kotlinx.android.synthetic.main.product_detail_fragment.detail_title
 
 class ProductDetailFragment : Fragment() {
 
@@ -18,10 +19,11 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        detail_title.text = requireArguments().getCharSequence(ARG_PRODUCT_ID)
+        val product: ProductData = requireArguments().get(ARG_PRODUCT_ID) as ProductData
+        detail_title.text = product.title
     }
 
     companion object {
-        const val ARG_PRODUCT_ID = "product_id"
+        const val ARG_PRODUCT_ID = "product"
     }
 }

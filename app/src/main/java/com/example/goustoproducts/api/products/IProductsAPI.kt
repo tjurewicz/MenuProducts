@@ -8,7 +8,7 @@ import retrofit2.http.GET
 interface IProductsAPI {
 
     companion object {
-        const val API_PRODUCTS_ENDPOINT = "products"
+        const val API_PRODUCTS_ENDPOINT = "products?includes[]=categories&includes[]=attributes&image_sizes[]=750"
     }
 
     @GET(API_PRODUCTS_ENDPOINT)

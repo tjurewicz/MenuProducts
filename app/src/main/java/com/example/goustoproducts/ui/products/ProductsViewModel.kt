@@ -9,8 +9,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ProductsViewModel(private val api: IProductsAPI) : ViewModel() {
 
+    var products: ProductsResponse? = null
+
     fun getProducts(): Single<ProductsResponse> =
         api.fetchProductList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess { products = it }
+            .doOnError { println(it.message) }
 }

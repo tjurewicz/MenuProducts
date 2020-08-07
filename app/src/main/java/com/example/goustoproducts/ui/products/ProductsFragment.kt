@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goustoproducts.MainActivity
 import com.example.goustoproducts.R
-import com.example.goustoproducts.api.products.model.ProductInformation
+import com.example.goustoproducts.api.products.model.ProductData
 import kotlinx.android.synthetic.main.product_list_item.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,7 +38,7 @@ class ProductsFragment : Fragment() {
                 })
     }
 
-    private fun setupRecyclerView(data: List<ProductInformation>) {
+    private fun setupRecyclerView(data: List<ProductData>) {
         println(data.size)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.product_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(this.context)
@@ -46,7 +46,7 @@ class ProductsFragment : Fragment() {
         recyclerView?.adapter = listAdapter
     }
 
-    private fun showProducts(products: List<ProductInformation>) = product_title.run {
+    private fun showProducts(products: List<ProductData>) = product_title.run {
         listAdapter = ProductListAdapter(products, this@ProductsFragment.activity as MainActivity)
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goustoproducts.application.appModule
 import com.example.goustoproducts.application.networkModule
-import com.example.goustoproducts.ui.products.ProductDetailFragment
 import com.example.goustoproducts.ui.products.ProductsFragment
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

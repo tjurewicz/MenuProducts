@@ -3,7 +3,7 @@ package com.example.goustoproducts.api.products.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class ProductInformation(
+data class ProductData(
     @SerializedName("id") val id: String,
     @SerializedName("sku") val sku: String,
     @SerializedName("title") val title: String,
@@ -18,7 +18,7 @@ data class ProductInformation(
     @SerializedName("zone") val zone: String?,
     @SerializedName("created_at") val createdAt: String,
     @SerializedName("categories") val categories: List<Category>,
-    @SerializedName("attributes") val attributes: Attributes?,
+    @SerializedName("attributes") val attributes: List<Attributes>?,
     @SerializedName("tags") val tags: List<String>,
-    @SerializedName("images") val images: List<Image>
+    @SerializedName("images") val images: Image
 ) : Serializable
