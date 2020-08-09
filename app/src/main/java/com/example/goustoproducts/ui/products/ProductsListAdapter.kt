@@ -1,8 +1,5 @@
 package com.example.goustoproducts.ui.products
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goustoproducts.MainActivity
 import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.ProductData
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_list_item.view.*
-import java.io.InputStream
-import java.net.URL
-
 
 class ProductListAdapter(
     private val productList: List<ProductData>,
@@ -51,9 +46,9 @@ class ProductListAdapter(
         internal fun updateImage(src: String) {
             val imageView = itemView.findViewById<ImageView>(R.id.product_image)
             if (src.isNotEmpty()) {
-                DownloadImageTask(imageView).execute(src)
+                Picasso.get().load(src).into(imageView)
             } else
-                imageView.setImageResource(R.drawable.ic_launcher_background)
+                imageView.setImageResource(R.drawable.ic_image_not_found)
         }
 
         internal fun updateProductTitle(title: String) {
@@ -79,24 +74,3 @@ class ProductListAdapter(
         }
     }
 }
-
-class DownloadImageTask(var bmImage: ImageView) : AsyncTask<String?, Void?, Bitmap?>() {
-    override fun doInBackground(vararg p0: String?): Bitmap? {
-        val urldisplay = p0[0]
-        var mIcon11: Bitmap? = null
-        try {
-            val stream: InputStream = URL(urldisplay).openStream()
-            mIcon11 = BitmapFactory.decodeStream(stream)
-        } catch (e: Exception) {
-            println("Error $e.message")
-            e.printStackTrace()
-        }
-        return mIcon11
-    }
-
-    override fun onPostExecute(result: Bitmap?) {
-        bmImage.setImageBitmap(result)
-    }
-
-}
-

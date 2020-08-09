@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GoustoProducts</string>
-    <string name="product_fragment">ProductFragment</string>
+    <string name="app_name">Gousto Products</string>
+    <string name="product_fragment">Product Fragment</string>
     <string name="image_of_gousto_product">Image of Gousto Product</string>
 </resources>

@@ -1,12 +1,14 @@
 package com.example.goustoproducts.ui.products
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.ProductData
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_detail_fragment.*
 
 class ProductDetailFragment : Fragment() {
@@ -21,8 +23,13 @@ class ProductDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val product: ProductData = requireArguments().get(ARG_PRODUCT_ID) as ProductData
         detail_title.text = product.title
-        if (product.images.imageDetails != null)
-            DownloadImageTask(detail_image).execute(product.images.imageDetails.src)
+        detail_description.text = product.description
+        detail_description.movementMethod = ScrollingMovementMethod()
+        if (product.images.imageDetails != null) {
+            Picasso.get().load(product.images.imageDetails.src).into(detail_image)
+        } else {
+            detail_image.setImageResource(R.drawable.ic_image_not_found)
+        }
     }
 
     companion object {
