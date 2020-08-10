@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,10 +32,7 @@ class ProductsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val db = Room.databaseBuilder(
-            requireActivity().applicationContext,
-            AppDatabase::class.java, "gousto-products"
-        )
+        val appDatabase = Room.databaseBuilder(requireActivity().applicationContext, AppDatabase::class.java, "gousto-products")
             .allowMainThreadQueries()
             .build()
 
@@ -42,24 +40,10 @@ class ProductsFragment : Fragment() {
             viewModel.getProducts()
                 .subscribe({
                     setupRecyclerView(it.data)
-                    if (db.productDao().getAll().isEmpty()) {
-                        viewModel.populateDatabase(db.productDao(), it.data)
+                    if (appDatabase.productDao().getAll().isEmpty()) {
+                        viewModel.populateDatabase(appDatabase.productDao(), it.data)
                     }
-                },
-                    {
-                        val dbProductData = viewModel.getProductsFromDatabase(db.productDao())
-                        val data = ArrayList<ProductData>()
-                        dbProductData.forEach {
-                            val productData = ProductData(
-                                id = it.id,
-                                title = it.title,
-                                listPrice = it.listPrice,
-                                description = it.description
-                            )
-                            data.add(productData)
-                        }
-                        setupRecyclerView(data)
-                    })
+                }, { handleError(appDatabase) })
         else {
             setupRecyclerView(viewModel.products!!)
         }
@@ -74,6 +58,30 @@ class ProductsFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    private fun handleError(appDatabase: AppDatabase) {
+        if (appDatabase.productDao().getAll().isEmpty()) {
+            Toast.makeText(context, "Failed to retrieve data from server and no data on device", Toast.LENGTH_LONG).show()
+        } else {
+            val data = getProductDataFromDatabase(appDatabase)
+            setupRecyclerView(data)
+        }
+    }
+
+    private fun getProductDataFromDatabase(db: AppDatabase): ArrayList<ProductData> {
+        val dbProductData = viewModel.getProductsFromDatabase(db.productDao())
+        val data = ArrayList<ProductData>()
+        dbProductData.forEach {
+            val productData = ProductData(
+                id = it.id,
+                title = it.title,
+                listPrice = it.listPrice,
+                description = it.description
+            )
+            data.add(productData)
+        }
+        return data
     }
 
     private fun setupRecyclerView(data: List<ProductData>) {

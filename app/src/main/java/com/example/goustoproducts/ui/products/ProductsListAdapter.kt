@@ -34,38 +34,40 @@ class ProductListAdapter(
 
     override fun getItemCount(): Int = productFilterList.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = productFilterList[position].run {
-        setClickListeners(holder, this)
-        this.title?.let { holder.updateProductTitle(it) }
-        this.listPrice?.let { holder.updateProductPrice(it) }
-        if (this.images?.imageDetails != null && this.images.imageDetails.src.isNotEmpty()) {
-            holder.updateImage(this.images.imageDetails.src)
-        } else {
-            holder.updateImage("")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        productFilterList[position].run {
+            setClickListeners(holder, this)
+            this.title?.let { holder.updateProductTitle(it) }
+            this.listPrice?.let { holder.updateProductPrice(it) }
+            if (this.images?.imageDetails != null && this.images.imageDetails.src.isNotEmpty()) {
+                holder.updateImage(this.images.imageDetails.src)
+            } else {
+                holder.updateImage("")
+            }
         }
-    }
 
     fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                if (charSearch.isEmpty()) {
-                    productFilterList = productList
+                productFilterList = if (charSearch.isEmpty()) {
+                    productList
                 } else {
                     val resultList = ArrayList<ProductData>()
                     for (productData in productFilterList) {
-                        if (productData.title!!.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                        if (productData.title!!.toLowerCase(Locale.ROOT)
+                                .contains(charSearch.toLowerCase(Locale.ROOT))
+                        ) {
                             resultList.add(productData)
                         }
                     }
-                    productFilterList = resultList
+                    resultList
                 }
                 val filterResults = FilterResults()
                 filterResults.values = productFilterList
                 return filterResults
             }
 
-            @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 productFilterList = results?.values as List<ProductData>
                 notifyDataSetChanged()
@@ -99,7 +101,7 @@ class ProductListAdapter(
         internal fun openProductPage(product: ProductData, activity: MainActivity) {
             val detailFragment = ProductDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ProductDetailFragment.ARG_PRODUCT_ID, product)
+                    putSerializable(ProductDetailFragment.ARG_PRODUCT, product)
                 }
             }
             activity.supportFragmentManager
