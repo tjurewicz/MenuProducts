@@ -13,7 +13,7 @@ interface IProductDataDao {
     @Query("SELECT * FROM dbproductdata WHERE id IN (:ids)")
     fun loadAllByIds(ids: IntArray): List<DBProductData>
 
-    @Query("SELECT * FROM dbproductdata WHERE title LIKE :first")
+    @Query("SELECT * FROM dbproductdata WHERE title LIKE :title")
     fun findByName(title: String): DBProductData
 
     @Insert
