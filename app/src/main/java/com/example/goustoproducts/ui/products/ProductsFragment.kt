@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,23 +30,41 @@ class ProductsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val db = Room.databaseBuilder(
             requireActivity().applicationContext,
             AppDatabase::class.java, "gousto-products"
-        ).build()
+        )
+            .allowMainThreadQueries()
+            .build()
+
         if (viewModel.products == null)
             viewModel.getProducts()
                 .subscribe({
                     setupRecyclerView(it.data)
+                    if (db.productDao().getAll().isEmpty()) {
+                        viewModel.populateDatabase(db.productDao(), it.data)
+                    }
                 },
                     {
-                        Toast.makeText(context, "Could not retrieve data", Toast.LENGTH_LONG).show()
+                        val dbProductData = viewModel.getProductsFromDatabase(db.productDao())
+                        val data = ArrayList<ProductData>()
+                        dbProductData.forEach {
+                            val productData = ProductData(
+                                id = it.id,
+                                title = it.title,
+                                listPrice = it.listPrice,
+                                description = it.description
+                            )
+                            data.add(productData)
+                        }
+                        setupRecyclerView(data)
                     })
         else {
-            setupRecyclerView(viewModel.products!!.data)
+            setupRecyclerView(viewModel.products!!)
         }
 
-        product_search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        product_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -65,5 +82,4 @@ class ProductsFragment : Fragment() {
         listAdapter = ProductListAdapter(data, this.activity as MainActivity)
         recyclerView?.adapter = listAdapter
     }
-
 }

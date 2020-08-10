@@ -14,7 +14,7 @@ interface IProductDataDao {
     fun loadAllByIds(ids: IntArray): List<DBProductData>
 
     @Query("SELECT * FROM dbproductdata WHERE title LIKE :title")
-    fun findByName(title: String): DBProductData
+    fun findByTitle(title: String): DBProductData
 
     @Insert
     fun insertAll(vararg products: DBProductData)

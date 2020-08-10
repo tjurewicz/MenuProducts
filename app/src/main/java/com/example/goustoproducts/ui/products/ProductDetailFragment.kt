@@ -25,7 +25,7 @@ class ProductDetailFragment : Fragment() {
         detail_title.text = product.title
         detail_description.text = product.description
         detail_description.movementMethod = ScrollingMovementMethod()
-        if (product.images.imageDetails != null) {
+        if (product.images?.imageDetails != null) {
             Picasso.get().load(product.images.imageDetails.src).into(detail_image)
         } else {
             detail_image.setImageResource(R.drawable.ic_image_not_found)

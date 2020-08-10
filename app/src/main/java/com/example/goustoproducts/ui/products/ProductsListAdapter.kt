@@ -36,9 +36,9 @@ class ProductListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = productFilterList[position].run {
         setClickListeners(holder, this)
-        holder.updateProductTitle(this.title)
-        holder.updateProductPrice(this.listPrice)
-        if (this.images.imageDetails != null && this.images.imageDetails.src.isNotEmpty()) {
+        this.title?.let { holder.updateProductTitle(it) }
+        this.listPrice?.let { holder.updateProductPrice(it) }
+        if (this.images?.imageDetails != null && this.images.imageDetails.src.isNotEmpty()) {
             holder.updateImage(this.images.imageDetails.src)
         } else {
             holder.updateImage("")
@@ -53,9 +53,9 @@ class ProductListAdapter(
                     productFilterList = productList
                 } else {
                     val resultList = ArrayList<ProductData>()
-                    for (row in productFilterList) {
-                        if (row.title.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
-                            resultList.add(row)
+                    for (productData in productFilterList) {
+                        if (productData.title!!.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                            resultList.add(productData)
                         }
                     }
                     productFilterList = resultList
