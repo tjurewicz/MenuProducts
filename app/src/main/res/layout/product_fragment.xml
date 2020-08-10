@@ -6,16 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.products.ProductsFragment">
 
-    <androidx.appcompat.widget.SearchView
+    <SearchView
         android:id="@+id/product_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:queryHint="@string/search_hint"
         android:textCursorDrawable="@null"
+        app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:iconifiedByDefault="false"
         app:queryBackground="@null" />
 
     <androidx.recyclerview.widget.RecyclerView

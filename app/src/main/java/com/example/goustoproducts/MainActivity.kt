@@ -8,6 +8,7 @@ import com.example.goustoproducts.ui.products.ProductsFragment
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
         setupKoin()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopKoin()
     }
 
     private fun setupKoin() {

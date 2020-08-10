@@ -2,6 +2,5 @@
     <string name="app_name">Gousto Products</string>
     <string name="product_fragment">Product Fragment</string>
     <string name="image_of_gousto_product">Image of Gousto Product</string>
-    <string name="action_search">Search</string>
-    <string name="search_hint">Type product…</string>
+    <string name="search_hint">Search product…</string>
 </resources>

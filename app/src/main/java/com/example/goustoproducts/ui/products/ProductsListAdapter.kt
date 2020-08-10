@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goustoproducts.MainActivity
@@ -11,22 +12,29 @@ import com.example.goustoproducts.R
 import com.example.goustoproducts.api.products.model.ProductData
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_list_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProductListAdapter(
     private val productList: List<ProductData>,
     private val activity: MainActivity
 ) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return LayoutInflater.from(parent.context)
+    var productFilterList: List<ProductData> = ArrayList<ProductData>()
+
+    init {
+        productFilterList = productList
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        LayoutInflater.from(parent.context)
             .inflate(R.layout.product_list_item, parent, false).run {
                 ViewHolder(this)
             }
-    }
 
-    override fun getItemCount(): Int = productList.size
+    override fun getItemCount(): Int = productFilterList.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = productList[position].run {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = productFilterList[position].run {
         setClickListeners(holder, this)
         holder.updateProductTitle(this.title)
         holder.updateProductPrice(this.listPrice)
@@ -34,6 +42,34 @@ class ProductListAdapter(
             holder.updateImage(this.images.imageDetails.src)
         } else {
             holder.updateImage("")
+        }
+    }
+
+    fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()) {
+                    productFilterList = productList
+                } else {
+                    val resultList = ArrayList<ProductData>()
+                    for (row in productFilterList) {
+                        if (row.title.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                            resultList.add(row)
+                        }
+                    }
+                    productFilterList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = productFilterList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                productFilterList = results?.values as List<ProductData>
+                notifyDataSetChanged()
+            }
         }
     }
 
