@@ -43,6 +43,23 @@ class ProductsTest {
     }
 
     @Test
+    fun clickingOnBackButtonInDetailViewReturnsToListView() {
+
+        Thread.sleep(1500)
+        val productTitle = "Borsao Macabeo"
+        onView(withId(R.id.product_recycler_view)).check(matches(hasDescendant(withText(productTitle))))
+        onView(withId(R.id.product_recycler_view))
+            .perform(
+                RecyclerViewActions.actionOnItem<ProductListAdapter.ViewHolder>(
+                    hasDescendant(withText(productTitle)), click()
+                )
+            );
+        onView(withId(R.id.detail_title)).check(matches(withText(productTitle)))
+        onView(withId(R.id.back_button)).perform(click())
+        onView(withId(R.id.product_recycler_view)).check(matches(hasDescendant(withText(productTitle))))
+    }
+
+    @Test
     fun searchingTextReturnsItemInList() {
 
         val searchText = "dolci"
