@@ -20,18 +20,25 @@ class ProductsViewModelTest {
     private val mockDao: IProductDataDao = mock()
     private lateinit var mockProductsApi: IProductsAPI
     private lateinit var productsViewModel: ProductsViewModel
-    private val mockProductData = ProductData(id = "1", title = "Ocean man", listPrice = "9.99", description = "Ocean man, take me by the hand, lead me to the land that you understand")
-    private val mockDbProductData = DBProductData(id = "1", title = "Ocean man", price = "9.99", description = "Ocean man, take me by the hand, lead me to the land that you understand")
-
+    private val mockProductData = ProductData(
+        id = "1",
+        title = "Ocean man",
+        listPrice = "9.99",
+        description = "Ocean man, take me by the hand, lead me to the land that you understand"
+    )
+    private val mockDbProductData = DBProductData(
+        id = "1",
+        title = "Ocean man",
+        price = "9.99",
+        description = "Ocean man, take me by the hand, lead me to the land that you understand"
+    )
 
     @Before
     fun setup() {
+
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
-        mockProductsApi = mock {
-            on { fetchProductList(any(), any(), any()) } doReturn Single.just(mockResponse)
-        }
-
+        mockProductsApi = mock { on { fetchProductList(any(), any(), any()) } doReturn Single.just(mockResponse) }
         productsViewModel = ProductsViewModel(mockProductsApi)
     }
 
