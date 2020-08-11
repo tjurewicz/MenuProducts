@@ -20,6 +20,7 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        back_button.setOnClickListener { requireActivity().onBackPressed() }
         val productData = requireArguments().get(ARG_PRODUCT) as ProductData
         setupViews(productData)
     }
