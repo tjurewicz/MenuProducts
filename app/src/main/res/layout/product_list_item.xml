@@ -33,7 +33,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/product_image"
             app:layout_constraintTop_toTopOf="parent"
-            android:textStyle="bold"
             tools:text="Very long title that wraps around to a new line after it reaches the end of the screen" />
 
         <TextView
@@ -43,6 +42,7 @@
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/large_margin"
             android:textSize="16sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/product_image"
             app:layout_constraintTop_toBottomOf="@id/product_title"
             tools:text="£99999999999.99" />

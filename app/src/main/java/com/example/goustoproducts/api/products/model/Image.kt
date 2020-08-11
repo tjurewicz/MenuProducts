@@ -1,9 +1,10 @@
 package com.example.goustoproducts.api.products.model
 
+import com.example.goustoproducts.ui.products.ProductsViewModel
 import com.google.gson.annotations.SerializedName
 
 data class Image(
-    @SerializedName("750") val imageDetails: ImageDetails?
+    @SerializedName(ProductsViewModel.IMAGE_SIZE) val imageDetails: ImageDetails?
 )
 
 data class ImageDetails(

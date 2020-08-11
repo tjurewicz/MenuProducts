@@ -6,10 +6,7 @@ import com.example.goustoproducts.api.products.model.ProductsResponse
 import com.example.goustoproducts.database.DBProductData
 import com.example.goustoproducts.database.IProductDataDao
 import com.example.goustoproducts.ui.products.ProductsViewModel
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -32,7 +29,7 @@ class ProductsViewModelTest {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
         mockProductsApi = mock {
-            on { fetchProductList() } doReturn Single.just(mockResponse)
+            on { fetchProductList(any(), any(), any()) } doReturn Single.just(mockResponse)
         }
 
         productsViewModel = ProductsViewModel(mockProductsApi)
@@ -42,7 +39,7 @@ class ProductsViewModelTest {
     fun `Get products calls products API`() {
 
         productsViewModel.getProducts()
-        verify(mockProductsApi).fetchProductList()
+        verify(mockProductsApi).fetchProductList(any(), any(), any())
     }
 
     @Test

@@ -15,7 +15,7 @@ class ProductsViewModel(private val api: IProductsAPI) : ViewModel() {
     var products: List<ProductData>? = null
 
     fun getProducts(): Single<ProductsResponse> =
-        api.fetchProductList()
+        api.fetchProductList(CATEGORIES, ATTRIBUTES, IMAGE_SIZE)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { products = it.data }
@@ -46,5 +46,11 @@ class ProductsViewModel(private val api: IProductsAPI) : ViewModel() {
             products.add(data)
         }
         return products
+    }
+
+    companion object {
+        private const val CATEGORIES = "categories"
+        private const val ATTRIBUTES = "attributes"
+        const val IMAGE_SIZE = "750"
     }
 }
