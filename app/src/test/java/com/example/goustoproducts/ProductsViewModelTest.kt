@@ -43,21 +43,21 @@ class ProductsViewModelTest {
     }
 
     @Test
-    fun `Get products calls products API`() {
+    fun `Validate that ViewModel calls ProductsAPI`() {
 
         productsViewModel.getProducts()
         verify(mockProductsApi).fetchProductList(any(), any(), any())
     }
 
     @Test
-    fun `Validate that VM inserts the data into the database`() {
+    fun `Validate that ViewModel inserts data into the database`() {
 
         productsViewModel.populateDatabase(mockDao, listOf(mockProductData))
         verify(mockDao).insertAll(mockDbProductData)
     }
 
     @Test
-    fun `Validate that getAll from DB returns values`() {
+    fun `Validate that ViewModel correctly returns values from database`() {
         whenever(mockDao.getAll()).thenReturn(listOf(mockDbProductData))
 
         val returnedList = productsViewModel.getProductsFromDatabase(mockDao)
