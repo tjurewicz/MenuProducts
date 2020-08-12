@@ -53,15 +53,7 @@ class ProductListAdapter(
                 productFilterList = if (charSearch.isEmpty()) {
                     productList
                 } else {
-                    val resultList = ArrayList<ProductData>()
-                    for (productData in productFilterList) {
-                        if (productData.title!!.toLowerCase(Locale.ROOT)
-                                .contains(charSearch.toLowerCase(Locale.ROOT))
-                        ) {
-                            resultList.add(productData)
-                        }
-                    }
-                    resultList
+                    productFilterList.filter { it.title?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT)) ?: false }
                 }
                 val filterResults = FilterResults()
                 filterResults.values = productFilterList

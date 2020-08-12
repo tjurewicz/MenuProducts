@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ProductData(
-    @SerializedName("id") val id: String? = null,
+    @SerializedName("id") val id: String,
     @SerializedName("sku") val sku: String? = null,
-    @SerializedName("title") val title: String? = null,
-    @SerializedName("description") val description: String? = null,
-    @SerializedName("list_price") val listPrice: String? = null,
+    @SerializedName("title") val title: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("list_price") val listPrice: String,
     @SerializedName("is_vatable") val isVatable: Boolean? = null,
     @SerializedName("is_for_sale") val isForSale: Boolean? = null,
     @SerializedName("age_restricted") val ageRestricted: String? = null,

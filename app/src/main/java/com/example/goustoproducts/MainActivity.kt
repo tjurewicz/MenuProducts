@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupKoin() {
         startKoin {
             androidLogger()
-            androidContext(this@MainActivity)
+            androidContext(this@MainActivity.applicationContext)
             modules(appModule, networkModule)
         }
     }
