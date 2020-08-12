@@ -1,7 +1,7 @@
 # GoustoProducts
 
 ### Notes
-I used minSdkVersion 24 so the app could run on 73.7% of Android devices, making it easier to test my app on a wide range of physical devices if needed.
+I used minSdkVersion 24 so the app could run on 73.7% of Android devices, making it easier to test my app on a wide range of devices if needed.
 
 Not a 3rd party library, but I used Room because of how easy it is to set up a persistent database.
 
