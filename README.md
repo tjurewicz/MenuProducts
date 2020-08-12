@@ -26,7 +26,7 @@ I could also improve the search functionality, implementing fuzzy string searchi
 There's also some allergen information of certain products, so I could add information to the product details. If this app was expanded to have user accounts, I would let the user indicate their dietary preferences and automatically filter out things that don't fit (maybe not hide them, but grey those options out and put them at the bottom of the product list).
 
 #### Better architecture
-There's some heavy stuff in ProductsFragment, which feels more natural to have in the ViewModel and work with LiveData between fragment-VM, however unit testing the VM with the Room database because very complicated, and I couldn't figure it out in time, so I had to revert back to doing a lot of heavy lifting in the fragment.
+There's some heavy stuff in ProductsFragment, which feels more natural to have in the ViewModel and work with LiveData between fragment-VM, however unit testing the VM with the Room database became very complicated, and I couldn't figure it out in time, so I had to revert back to doing a lot of heavy lifting in the fragment.
 
 Some Databinding would be a nice to have, has an added benefit of making the code a bit leaner.
 
