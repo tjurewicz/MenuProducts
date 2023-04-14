@@ -1,4 +1,4 @@
-# GoustoProducts
+# MenuProducts
 
 ### Notes
 I used minSdkVersion 24 so the app could run on 73.7% of Android devices, making it easier to test my app on a wide range of devices if needed.
